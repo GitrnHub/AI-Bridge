@@ -10,16 +10,23 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - name: Download source video
+      - name: Probe CDN and download source video
         shell: bash
         run: |
           set -euxo pipefail
           URL='https://sns-video-hw.xhscdn.com/spectrum/1040g0jg324qmr6qq1me05ph8c8n1omv3g37fdj0'
           mkdir -p out/frames
-          curl -L --fail --retry 4 --retry-delay 2 \
-            -A 'Mozilla/5.0' \
-            -H 'Referer: https://www.xiaohongshu.com/' \
-            "$URL" -o out/source_video
+          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/152.0.0.0 Safari/537.36'
+          curl -L --http1.1 --connect-timeout 10 --max-time 30 \
+            -A "$UA" -H 'Referer: https://www.xiaohongshu.com/' \
+            -H 'Range: bytes=0-1023' -D out/probe_headers.txt \
+            "$URL" -o out/probe.bin || true
+          cat out/probe_headers.txt || true
+          ls -lh out/probe.bin || true
+          curl -L --http1.1 --fail --connect-timeout 10 --max-time 120 \
+            --speed-time 20 --speed-limit 1024 --retry 2 --retry-delay 2 \
+            -A "$UA" -H 'Referer: https://www.xiaohongshu.com/' \
+            -D out/download_headers.txt "$URL" -o out/source_video
           file out/source_video | tee out/file.txt
           ls -lh out/source_video | tee out/size.txt
 
