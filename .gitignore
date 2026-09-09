@@ -1,0 +1,23 @@
+# AI-Bridge local/transient data
+.bridge-local/
+*.tmp
+*.log
+*.dmp
+
+# Archives are not the default source-transfer mechanism.
+# Store intended deliverables in Releases/LFS/Actions/external storage and
+# reference them from artifacts.md. Force-add only when an archive itself is
+# intentionally part of the versioned source/test fixture.
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.tar.zst
+
+# Common generated caches
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.cache/

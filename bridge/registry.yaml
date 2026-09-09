@@ -1,0 +1,5 @@
+bridge_version: 2
+
+# Registry is only an entry index. Each workspace .bridge/state.yaml is the
+# source of truth for its current status.
+workspaces: []

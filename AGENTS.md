@@ -1,129 +1,135 @@
-# AGENTS.md — AI-Bridge Codex Instructions
+# Codex Instructions for AI-Bridge
 
-This repository is a **general handoff bridge between Codex and GPT Web**, not a single-project task repository.
+本文件面向 Codex。进入本仓库后，把这里视为全局协作指令。
 
-When Codex works in this repository, follow these rules unless the user's latest explicit instruction overrides them.
+## 1. 先读什么
 
-## Startup sequence
+开始任何工作前按顺序读取：
 
-1. Read `README.md`.
-2. Read `handoffs/INDEX.md`.
-3. Identify the relevant `workspace` and latest handoff chain.
-4. Read the current handoff and only the parent/context documents needed to continue.
-5. Inspect the exact referenced commit/files before making architectural or verification claims.
+1. `/README.md`
+2. `/bridge/PROTOCOL.md`
+3. `/bridge/ARTIFACTS.md`（涉及文件、模型、日志、二进制、压缩包时）
+4. `/bridge/registry.yaml`
+5. 目标 workspace 的 `/.bridge/state.yaml`
+6. 目标 workspace 的 `/.bridge/context.md`
+7. 当前 exchange 的 `request.md / response.md / verification.md / artifacts.md`
 
-Do not assume the numerically largest file is the current work. Multiple workspaces may be active in parallel.
+如果 workspace 内存在更深层的 `AGENTS.md`，其目录作用域内的更具体要求优先于本文件；用户最新明确指令始终最高优先级。
 
-## Codex default role
+## 2. Codex 的默认职责
 
-Codex is primarily responsible for:
+Codex 默认承担：
 
-- architecture and decomposition;
-- interface/contracts;
-- environment and dependency constraints;
-- real-machine inspection;
-- reproducible test design;
-- actual execution on target hardware/software;
-- benchmark and diagnostic evidence;
-- verification of a specific GPT Web commit;
-- producing evidence-backed failure handoffs when implementation does not pass.
+- 需求澄清和工程拆解；
+- 架构、接口、约束和验收条件；
+- 真实环境/硬件/驱动/依赖调查；
+- 构建最小复现、环境探针或测试工具；
+- 在真实机器执行测试和 benchmark；
+- 收集日志、错误、性能、环境版本；
+- 锁定具体 commit 并独立验证；
+- PASS/FAIL 判定及失败证据整理。
 
-GPT Web is primarily responsible for the concrete implementation, larger code edits, refactors and repair work derived from Codex handoffs.
+具体业务实现默认交给 Web GPT，除非用户明确要求 Codex 实现，或修改极小、作为测试工具更合理。
 
-Codex may still write small probes, tests, environment scripts, minimal reproductions, or tiny obvious fixes when useful. If Codex makes substantive implementation changes, state that explicitly in the handoff.
+## 3. 新交接
 
-## Creating a handoff for GPT Web
+新交接不要写进按角色划分的全局目录。应创建：
 
-Prefer copying `templates/codex-handoff.md`.
-
-A useful handoff must let GPT Web continue without the original chat. Include, as applicable:
-
-- goal;
-- background needed for implementation;
-- relevant files/modules;
-- architecture decision;
-- interface/behavior contracts;
-- constraints;
-- known facts and evidence;
-- assumptions that are not yet verified;
-- required changes;
-- acceptance criteria;
-- artifacts/logs;
-- what GPT Web must return.
-
-Set metadata roughly as:
-
-```yaml
-from: codex
-to: web-gpt
-status: ready
+```text
+workspaces/<workspace>/.bridge/exchanges/<handoff-id>/request.md
 ```
 
-After creating the handoff, update `handoffs/INDEX.md` for that workspace.
+同时更新：
 
-## Verifying GPT Web output
+```text
+workspaces/<workspace>/.bridge/state.yaml
+bridge/registry.yaml
+```
 
-Before testing, resolve and record the exact full commit SHA.
+`request.md` 必须让 Web GPT 在没有原聊天的情况下仍能执行。
 
-Never report only `tested main`.
+至少包含：
 
-For important verification, record:
+- goal；
+- current facts；
+- decisions；
+- assumptions；
+- requested changes；
+- constraints；
+- acceptance criteria；
+- test plan；
+- out of scope；
+- relevant files/commits/artifacts。
 
-- tested commit;
-- actual environment;
-- commands;
-- input/test conditions;
-- expected behavior;
-- actual behavior;
-- measurements where relevant;
-- artifact/log paths;
-- PASS or FAIL.
+## 4. 分支与验证
 
-Use `templates/codex-verification.md` when appropriate.
+对于会修改实际工作文件的 exchange：
 
-### PASS
+```text
+bridge/<workspace>/<handoff-id>
+```
 
-A PASS means the stated acceptance criteria were actually exercised sufficiently to support the conclusion.
+作为默认工作分支。
 
-Update the handoff chain and `handoffs/INDEX.md` accordingly.
+`main` 应尽量保持为已接受/已验证基线。
 
-### FAIL
+验证 Web GPT 实现前：
 
-Do not write only “failed” or “still broken”. Create a new evidence-backed handoff to GPT Web containing enough information to reproduce or reason about the failure:
+1. 获取完整 implementation commit SHA；
+2. 确认工作区没有额外未提交变更影响结果；
+3. 记录实际环境；
+4. 执行 request 中的验收测试；
+5. 把命令、输出摘要和证据写入 `verification.md`；
+6. 大型输出按 `/bridge/ARTIFACTS.md` 处理。
 
-- exact tested commit;
-- environment;
-- command;
-- input;
-- expected result;
-- actual result;
-- error/log;
-- reproducibility;
-- any narrowed failure scope.
+禁止用“当前 main”“最新版代码”代替 commit SHA。
 
-Preserve the failed verification as history. Do not rewrite old failure evidence into a PASS.
+## 5. FAIL 后怎么办
 
-## Facts vs inference
+失败不是一句 `FAIL`。
 
-Keep these concepts distinct:
+必须写明：
 
-- `FACT`: directly observed or verified;
-- `DECISION`: an accepted architecture/user decision;
-- `ASSUMPTION`: currently relied upon but not verified;
-- `PROPOSAL`: an option not yet accepted.
+- tested commit；
+- 环境；
+- 精确命令；
+- 输入；
+- expected；
+- actual；
+- error/log；
+- 是否稳定复现；
+- 已排除项；
+- 建议 Web GPT 优先检查的范围。
 
-Do not turn an assumption into a fact merely because it is technically plausible.
+然后把 `state.yaml` 的 `next_actor` 改回 `web-gpt`。
 
-## Repository hygiene
+## 6. Artifact
 
-- Do not commit secrets, credentials, tokens, cookies, private keys, or sensitive personal/internal data.
-- Keep large binaries/models/datasets out of Git unless explicitly appropriate.
-- For external artifacts, record version/source/hash when practical.
-- Preserve traceability between handoff, code commit and verification.
-- Keep `handoffs/INDEX.md` concise; detailed evidence belongs in handoff documents or `analysis-output/`.
+不要把源码目录打成 ZIP 再提交作为正常交接。
 
-## Primary objective
+优先级：
 
-Use GitHub as the durable shared memory between Codex and GPT Web.
+- 源码/文本/小型配置：普通 Git；
+- 需要随 checkout 版本化的大型二进制：Git LFS；
+- 对外或里程碑二进制：GitHub Release assets；
+- CI 临时构建、日志、测试输出：GitHub Actions artifacts；
+- 超大数据集/模型/临时文件：外部对象存储，并在 `artifacts.md` 记录 URL/标识、SHA256、大小、来源 commit 和用途。
 
-A successful handoff should remain understandable and actionable even if both agents lose their original conversation history.
+如果确实需要压缩包，必须说明为什么需要，以及该包是否为 source of truth。通常答案应为“不是”。
+
+## 7. 事实标签
+
+文档中明确区分：
+
+- `FACT`：实际观察或已验证；
+- `DECISION`：已确定的设计决定；
+- `ASSUMPTION`：尚未验证但当前依赖的假设；
+- `PROPOSAL`：候选方案，尚未采纳。
+
+不要把 `ASSUMPTION` 在后续交接中悄悄升级为 `FACT`。
+
+## 8. 完成条件
+
+Codex 只有在验证目标 commit 满足验收标准后才能把状态设为 `verified`。
+
+如果任务本身是 research/design/context-only，不存在可执行实机测试，则 verification 应明确写出验证方式（例如来源核对、静态审查、用户确认），不要伪造“实机 PASS”。

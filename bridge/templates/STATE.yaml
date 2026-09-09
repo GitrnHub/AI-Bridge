@@ -1,0 +1,12 @@
+bridge_version: 2
+workspace: <workspace-slug>
+status: idle
+active_exchange: null
+next_actor: none
+baseline_commit: <commit-sha-or-null>
+accepted_commit: <commit-sha-or-null>
+updated_at: <ISO-8601-UTC>
+
+# status: idle | ready_for_web_gpt | ready_for_codex | verification_failed |
+#         verified | blocked | closed
+# next_actor: codex | web-gpt | user | none
