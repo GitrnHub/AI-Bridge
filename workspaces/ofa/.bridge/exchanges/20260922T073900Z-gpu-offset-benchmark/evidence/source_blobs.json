@@ -1,0 +1,28 @@
+{
+  "implementation_commit": "45862657fa96feb68c712f12be3165e8eeeab16a",
+  "path_base": "workspaces/ofa/",
+  "algorithm": "Git blob SHA-1 including blob header",
+  "python_files": {
+    "benchmark.py": "de922cd53387973f55fad2779194881c6dfb64da",
+    "doctor.py": "9e08da88a1b601bb812c01d3c72a1e33780a3a3b",
+    "download_weights.py": "4d3db33db2b3018f14242e109184e06a4c8d2b03",
+    "export_inputs.py": "6bf39f9c36046afb48a99b17ec4db6346fe3eae6",
+    "ofabench/__init__.py": "2e2a437e1dc16f00bb8001e7836ff073d6eb68ef",
+    "ofabench/backends.py": "986be647d27aeac3c305cd955ee495597aa44a63",
+    "ofabench/data.py": "3c945f6b41eb7eb6700f381c067a0528330fa650",
+    "ofabench/mathops.py": "30c6a2860e18d5205498d49a7348f25661cfcfcd",
+    "ofabench/metrics.py": "2347e48ce2d4e01303cbfc1817c3a933d630394b",
+    "ofabench/report.py": "bddd7d8ed4c12bacd7eab0170b042362130365e9",
+    "ofabench/runner.py": "b397511597b59c18615682ccab8e63970d9211ce",
+    "ofabench/telemetry.py": "7c192da277d28c342414a932f5c24e54f1d3cbf7",
+    "tests/test_harness.py": "1ac8b6073767e9e90a2aaba6585f7af5c1894b54",
+    "tests/test_math.py": "27aff0cdeab72226b50ac2ea63530d9c5d2d8f53",
+    "vendor/ofa_v4.py": "f6c3145db2beebb3ffe32c28aa8afa7d739dab36"
+  },
+  "verified_subtree_ids": {
+    "ofabench": "5e1c67c3cab4e11c6307acf0ff72b811d8e41623",
+    "tests": "58c68397083656a9d336fe01d350865039f07064",
+    "vendor": "00716b738cec5186cd7067bb54ef4702327a5b95",
+    "docs": "c6d9765e39f2dca60a03fa963b3c9a1e0af47cdb"
+  }
+}
