@@ -1,0 +1,6 @@
+# Preserve byte-identical Python sources/checksums on Windows checkouts.
+*.py text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.txt text eol=lf

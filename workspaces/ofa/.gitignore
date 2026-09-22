@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+results/
+generated_inputs/
+doctor.json
+*.pth
+*.pt
+*.engine
+*.dll
+*.log
+local_config*.json

@@ -1,0 +1,6 @@
+{
+  "sizes": [[256, 256], [640, 480]],
+  "seeds": [0, 1, 2, 3],
+  "throughput_seconds": 4,
+  "latency_samples": 40
+}

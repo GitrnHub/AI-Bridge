@@ -1,0 +1,21 @@
+{
+  "scope": "CPU mathematics and harness only; no GPU measurements",
+  "python": "3.13.5",
+  "packages": {
+    "torch": "2.10.0+cpu",
+    "torchvision": "0.25.0+cpu",
+    "numpy": "2.3.5",
+    "Pillow": "12.3.0",
+    "psutil": "7.2.2",
+    "pytest": "9.0.2"
+  },
+  "cuda_available": false,
+  "command": "python -m pytest -q",
+  "result": "54 passed in 11.28s",
+  "additional_checks": [
+    "Three isolated CPU backend workers completed and generated HTML/Markdown/CSV/JSON reports",
+    "Exported eight CPU-smoke pairs and read the manifest successfully",
+    "Original OFA Python source Git blob and SHA256 match the provided archive"
+  ],
+  "reference_source_sha256": "218dd1f1c40cd82d01fcfb3ef6f9ab6b98f4aaef4951c3112566191f777c2674"
+}

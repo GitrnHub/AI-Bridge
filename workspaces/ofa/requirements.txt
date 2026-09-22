@@ -1,0 +1,7 @@
+# Install the matching CUDA Torch pair separately; see README.md.
+numpy>=2.1,<3
+Pillow>=11,<13
+psutil>=6,<8
+nvidia-ml-py>=12.560,<14
+pytest>=8,<10
+# Do NOT install opencv-python here: its CPU-only wheel could replace custom CUDA cv2.

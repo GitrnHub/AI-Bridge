@@ -1,0 +1,14 @@
+{
+  "device": "cpu",
+  "sizes": [[96, 96]],
+  "backends": ["phase", "masked_zncc", "pyr_lk"],
+  "required_backends": ["phase", "masked_zncc", "pyr_lk"],
+  "scenes": ["texture", "subpixel", "ui_masked", "flat"],
+  "seeds": [0, 1],
+  "max_shift": 16,
+  "warmup": 2,
+  "latency_samples": 4,
+  "throughput_seconds": 0.15,
+  "throughput_chunk": 1,
+  "idle_seconds": 0
+}

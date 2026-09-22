@@ -1,0 +1,9 @@
+{
+  "sizes": [[256, 256], [640, 480], [1280, 720]],
+  "seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+  "backends": ["ofa_v4", "ofa_v4_forward", "ofa_common", "phase", "masked_zncc", "pyr_lk", "raft_small", "raft_large", "opencv_farneback"],
+  "throughput_seconds": 8,
+  "latency_samples": 100,
+  "warmup": 30,
+  "idle_seconds": 2
+}

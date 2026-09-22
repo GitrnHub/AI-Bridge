@@ -1,0 +1,15 @@
+{
+  "convention": "previous -> current, +x right, +y down",
+  "pairs": [
+    {
+      "id": "capture_0001",
+      "scene": "real_minimap",
+      "previous": "frame_0001.png",
+      "current": "frame_0002.png",
+      "mask_previous": null,
+      "mask_current": null,
+      "displacement_xy": null,
+      "observable": true
+    }
+  ]
+}

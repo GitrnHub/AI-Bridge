@@ -1,5 +1,9 @@
 bridge_version: 2
-
-# Registry is only an entry index. Each workspace .bridge/state.yaml is the
-# source of truth for its current status.
-workspaces: []
+# Index only; workspace state is authoritative.
+workspaces:
+  - id: ofa
+    path: workspaces/ofa
+    state: workspaces/ofa/.bridge/state.yaml
+    branch: OFA
+    status: ready_for_codex
+    next_actor: codex

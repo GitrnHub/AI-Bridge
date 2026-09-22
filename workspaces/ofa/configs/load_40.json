@@ -1,0 +1,10 @@
+{
+  "sizes": [[256, 256]],
+  "seeds": [0, 1, 2, 3],
+  "load_devices": 40,
+  "load_seconds": 15,
+  "load_period_seconds": 1.0,
+  "load_input": "host",
+  "load_deadline_ms": 1000,
+  "throughput_seconds": 4
+}
